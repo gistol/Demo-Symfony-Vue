@@ -22,6 +22,8 @@ import CreateAlumn from './components/CreateAlumn'
 import Team from './components/Team'
 import axios from 'axios'
 const BASE_URL = 'http://localhost:8000'
+import 'bootstrap-sweetalert/dist/sweetalert.css'
+import swal from 'bootstrap-sweetalert'
 
 export default {
   name: 'app',
@@ -74,6 +76,7 @@ export default {
       axios.post(BASE_URL + '/api/create/new/team', teamData)
            .then(function (response) {
              console.log(response)
+             swal('¿Correcto!', 'Equipo registrado satisfactoriamente', 'success')
            })
            .catch(function (error) {
              console.log(error)

@@ -11,11 +11,9 @@
           </select>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-md-offset-8 col-lg-offset-8">
-          <div class="form-group">
-            <input type="checkbox" @click="markNewProfessor" /> Marca, si requieres registrar un nuevo asesor
-          </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-md-offset-8 col-lg-offset-8">
+        <div class="form-group">
+          <input type="checkbox" @click="markNewProfessor" /> Marca, si requieres registrar un nuevo asesor
         </div>
       </div>
     </div>
