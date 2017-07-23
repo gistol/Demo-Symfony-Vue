@@ -19,7 +19,37 @@
       <professor></professor>
     </div>
     <alumn></alumn>
-    <button type="submit" class="btn btn-primary pull-right">Registrar Equipo</button>    
+    <div v-if="getTotalAlumns > 0">
+      <h3>Integrantes</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No. Control</th>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Email</th>
+            <th>Carrera</th>
+            <th>Semestre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="alumn in this.$store.state.alumns">
+            <td>{{ alumn.noControl }}</td>
+            <td>{{ alumn.name }}</td>
+            <td>{{ alumn.firstLastName }}</td>
+            <td>{{ alumn.secondLastName }}</td>
+            <td>{{ alumn.email }}</td>
+            <td>{{ alumn.selectedCareer }}</td>
+            <td>{{ alumn.semester }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary pull-right">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Registrar Equipo
+    </button>    
   </form>
 </template>
 
@@ -70,16 +100,8 @@ export default {
         professor = this.$store.state.selectedProfessor
       }
 
-      if ((this.$store.state.alumn.noControl !== '' || this.$store.state.alumn.noControl !== null) && (this.$store.state.alumn.name !== '' || this.$store.state.alumn.name !== null) && (this.$store.state.alumn.firstLastName !== '' || this.$store.state.alumn.firstLastName !== null) && (this.$store.state.alumn.email !== '' || this.$store.state.alumn.email !== null) && (this.$store.state.alumn.selectedCareer > 0) && (parseInt(this.$store.state.alumn.semester) > 0)) {
-        alumns = {
-          noControl: this.$store.state.alumn.noControl,
-          name: this.$store.state.alumn.name,
-          firstLastName: this.$store.state.alumn.firstLastName,
-          secondLastName: this.$store.state.alumn.secondLastName,
-          email: this.$store.state.alumn.email,
-          selectedCareer: this.$store.state.alumn.selectedCareer,
-          semester: parseInt(this.$store.state.alumn.semester)
-        }
+      if (this.$store.state.alumns.length > 0) {
+        alumns = this.$store.state.alumns
       }
 
       let teamData = { team, robot, professor, alumns }
@@ -93,26 +115,21 @@ export default {
            })
       // Clean form
       this.clearForm()
-      // if (this.newProfessor) {
-      //   this.fetchProfessors()
-      //   this.newProfessor = false
-      // }
     },
     clearForm () {
       this.team = ''
       this.robot = ''
       this.$store.state.selectedProfessor = 0
-      this.$store.state.name = null
-      this.$store.state.firstLastName = null
-      this.$store.state.secondLastName = null
-      this.$store.state.email = null
-      this.$store.state.alumn.noControl = ''
-      this.$store.state.alumn.name = ''
-      this.$store.state.alumn.firstLastName = ''
-      this.$store.state.alumn.secondLastName = ''
-      this.$store.state.alumn.email = ''
-      this.$store.state.alumn.selectedCareer = 0
-      this.$store.state.alumn.semester = 0
+      this.$store.state.professor.name = null
+      this.$store.state.professor.firstLastName = null
+      this.$store.state.professor.secondLastName = null
+      this.$store.state.professor.email = null
+      this.$store.state.alumns = []
+    }
+  },
+  computed: {
+    getTotalAlumns () {
+      return this.$store.state.alumns.length
     }
   }
 }

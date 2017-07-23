@@ -6,37 +6,37 @@
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>No. Control</label>
-        <input type="text" class="form-control" v-model="noControl" placeholder="No. de control del capitan" required>
+        <input type="text" class="form-control" v-model="alumn.noControl" placeholder="No. de control del alumno">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>Nombre(s)</label>
-        <input type="text" class="form-control" v-model="name" placeholder="Nombre del capitan" required>
+        <input type="text" class="form-control" v-model="alumn.name" placeholder="Nombre del alumno">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>Apellido Paterno</label>
-        <input type="text" class="form-control" v-model="firstLastName" placeholder="Apellido paterno del capitan" required>
+        <input type="text" class="form-control" v-model="alumn.firstLastName" placeholder="Apellido paterno del alumno">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>Apellido Materno</label>
-        <input type="text" class="form-control" v-model="secondLastName" placeholder="Apellido materno del capitan">
+        <input type="text" class="form-control" v-model="alumn.secondLastName" placeholder="Apellido materno del alumno">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>Correo electrónico</label>
-        <input type="email" class="form-control" v-model="email" placeholder="capitan@ejemplo.com" required>
+        <input type="email" class="form-control" v-model="alumn.email" placeholder="alumno@ejemplo.com">
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>Carrera</label>
-        <select class="form-control" v-model="selectedCareer" required>
+        <select class="form-control" v-model="alumn.selectedCareer">
           <option v-for="career in careers" :value="career.id">
             {{ career.name }}
           </option>
@@ -46,7 +46,7 @@
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="form-group">
         <label>Semestre</label>
-        <select class="form-control" v-model="semester" required>
+        <select class="form-control" v-model="alumn.semester">
           <option value="1">Primer Semestre</option>
           <option value="2">Segundo Semestre</option>
           <option value="3">Tercer Semestre</option>
@@ -58,7 +58,13 @@
           <option value="9">Noveno Semestre</option>
         </select>
       </div>
-    </div>             
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
+      <button class="btn btn-success pull-right" @click.prevent="addAlumn">
+       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Agregar Integrante
+      </button>
+    </div>
   </div>	
 </template>
 
@@ -69,7 +75,16 @@ const BASE_URL = 'http://localhost:8000'
 export default {
   data () {
     return {
-      careers: []
+      careers: [],
+      alumn: {
+        noControl: '',
+        name: '',
+        firstLastName: '',
+        secondLastName: '',
+        email: '',
+        selectedCareer: 0,
+        semester: 0
+      }
     }
   },
   mounted () {
@@ -81,64 +96,32 @@ export default {
            .then(response => {
              this.careers = response.data.careers
            })
-    }
-  },
-  computed: {
-    noControl: {
-      get () {
-        return this.$store.state.alumn.noControl
-      },
-      set (value) {
-        this.$store.commit('updateAlumnNoControl', value)
+    },
+    addAlumn () {
+      let alumn = null
+
+      if ((this.alumn.noControl !== '' || this.alumn.noControl !== null) && (this.alumn.name !== '' || this.alumn.name !== null) && (this.alumn.firstLastName !== '' || this.alumn.firstLastName !== null) && (this.alumn.email !== '' || this.alumn.email !== null) && (this.alumn.selectedCareer > 0) && (parseInt(this.alumn.semester) > 0)) {
+        alumn = {
+          noControl: this.alumn.noControl,
+          name: this.alumn.name,
+          firstLastName: this.alumn.firstLastName,
+          secondLastName: this.alumn.secondLastName,
+          email: this.alumn.email,
+          selectedCareer: this.alumn.selectedCareer,
+          semester: parseInt(this.alumn.semester)
+        }
+        this.$store.commit('addAlumn', alumn)
+        this.clearForm()
       }
     },
-    name: {
-      get () {
-        return this.$store.state.alumn.name
-      },
-      set (value) {
-        this.$store.commit('updateAlumnName', value)
-      }
-    },
-    firstLastName: {
-      get () {
-        return this.$store.state.alumn.firstLastName
-      },
-      set (value) {
-        this.$store.commit('updateAlumnFirstLastName', value)
-      }
-    },
-    secondLastName: {
-      get () {
-        return this.$store.state.alumn.secondLastName
-      },
-      set (value) {
-        this.$store.commit('updateAlumnSecondLastName', value)
-      }
-    },
-    email: {
-      get () {
-        return this.$store.state.alumn.email
-      },
-      set (value) {
-        this.$store.commit('updateAlumnEmail', value)
-      }
-    },
-    selectedCareer: {
-      get () {
-        return this.$store.state.alumn.selectedCareer
-      },
-      set (value) {
-        this.$store.commit('updateAlumnSelectedCareer', value)
-      }
-    },
-    semester: {
-      get () {
-        return this.$store.state.alumn.semester
-      },
-      set (value) {
-        this.$store.commit('updateAlumnSemester', value)
-      }
+    clearForm () {
+      this.alumn.noControl = ''
+      this.alumn.name = ''
+      this.alumn.firstLastName = ''
+      this.alumn.secondLastName = ''
+      this.alumn.email = ''
+      this.alumn.selectedCareer = 0
+      this.alumn.semester = 0
     }
   }
 }

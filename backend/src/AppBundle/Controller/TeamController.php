@@ -57,22 +57,24 @@ class TeamController extends Controller
                     $team->setProfessor($professor);
                 }
 
-                if (!is_null($alumns)) {
-                    $a = new Alumn();
-                    $a->setNoControl($alumns['noControl']);
-                    $a->setName($alumns['name']);
-                    $a->setFirstLastName($alumns['firstLastName']);
-                    $a->setSecondLastName($alumns['secondLastName']);
-                    $a->setEmail($alumns['email']);
-                    $a->setSemester($alumns['semester']);
-                    $a->setIsCaptain(false);
-                    // Get Career
-                    $career = $em->getRepository('AppBundle:Career')->findOneById($alumns['selectedCareer']);
-                    // Set Career
-                    $a->setCareer($career);
-                    $em->persist($a);
-                    $em->flush();
-                    $team->addAlumn($a);
+                foreach ($alumns as $alumn) {
+                    if (!is_null($alumn)) {
+                        $a = new Alumn();
+                        $a->setNoControl($alumn['noControl']);
+                        $a->setName($alumn['name']);
+                        $a->setFirstLastName($alumn['firstLastName']);
+                        $a->setSecondLastName($alumn['secondLastName']);
+                        $a->setEmail($alumn['email']);
+                        $a->setSemester($alumn['semester']);
+                        $a->setIsCaptain(false);
+                        // Get Career
+                        $career = $em->getRepository('AppBundle:Career')->findOneById($alumn['selectedCareer']);
+                        // Set Career
+                        $a->setCareer($career);
+                        $em->persist($a);
+                        $em->flush();
+                        $team->addAlumn($a);
+                    }
                 }
 
                 // Save Team
