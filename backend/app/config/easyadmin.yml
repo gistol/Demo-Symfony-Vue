@@ -1,0 +1,115 @@
+easy_admin:
+    site_name: 'Club de robótica'
+    formats:
+      date: 'd/m/Y'
+    design:
+      color_scheme: 'dark'
+      form_theme: 'horizontal'
+    list:
+        max_results: 10
+        actions:
+            - { name: 'show', label: '', icon: 'search'}
+            - { name: 'edit', label: '', icon: 'pencil' }
+            - { name: 'delete', label: '', icon: 'trash' }
+            - { name: 'search', label: 'Búsqueda' }
+    show:
+        actions:
+            - { name: 'edit', label: 'Actualizar' }
+            - { name: 'list', label: 'Regresar al menu' }
+    edit:
+        actions:
+            - { name: 'list', label: 'Regresar al menú' }
+    new:
+        actions:
+            - { name: 'list', label: 'Regresar al menú' }
+    entities:
+        Alumn:
+            label: 'Alumnos'
+            class: AppBundle\Entity\Alumn
+            list:
+                title: "Alumnos"
+                actions: [{ name: 'new', label: 'Agregar Alumno' }]
+                fields:
+                  - { property: 'id', label: 'ID' }
+                  - { property: 'name', label: 'Nombre' }
+                  - { property: 'firstLastName', label: 'Apellido Paterno' }
+                  - { property: 'secondLastName', label: 'Apellido Materno' }
+                  - { property: 'email', type: 'email', label: 'Correo electrónico' }
+                  - { property: 'semester', label: 'Semestre' }
+                  - { property: 'career', label: 'Carrera' }
+                  - { property: 'isCaptain', label: 'Capitan' }
+            form:
+                title: "Crear Alumno"
+                fields:
+                  - { property: 'name', label: 'Nombre' }
+                  - { property: 'firstLastName', label: 'Apellido Paterno' }
+                  - { property: 'secondLastName', label: 'Apellido Materno' }
+                  - { property: 'email', type: 'email', label: 'Correo electrónico', type_options: { required: true } }
+                  - { property: 'semester', label: 'Semestre' }
+                  - { property: 'career', label: 'Carrera', type_options: { required: true } }
+                  - { property: 'isCaptain', label: 'Capitan' }
+        Career:
+            label: 'Carreras'
+            class: AppBundle\Entity\Career
+            list:
+                title: "Carreras"
+                actions: [{ name: 'new', label: 'Agregar Carrera' }]
+                fields:
+                  - { property: 'id', label: 'ID' }
+                  - { property: 'name', label: 'Nombre' }
+            form:
+                title: "Crear Carrera"
+                fields:
+                  - { property: 'name', label: 'Nombre' }
+        Professor:
+            label: 'Asesores'
+            class: AppBundle\Entity\Professor
+            list:
+                title: "Asesores"
+                actions: [{ name: 'new', label: 'Agregar Asesor' }]
+                fields:
+                  - { property: 'id', label: 'ID' }
+                  - { property: 'name', label: 'Nombre' }
+                  - { property: 'firstLastName', label: 'Apellido Paterno' }
+                  - { property: 'secondLastName', label: 'Apellido Materno' }
+                  - { property: 'email', type: 'email', label: 'Correo electrónico' }
+            form:
+                title: "Crear Asesor"
+                fields:
+                  - { property: 'name', label: 'Nombre' }
+                  - { property: 'firstLastName', label: 'Apellido Paterno' }
+                  - { property: 'secondLastName', label: 'Apellido Materno' }
+                  - { property: 'email', type: 'email', label: 'Correo electrónico', type_options: { required: true } }
+        Robot:
+            label: 'Robot'
+            class: AppBundle\Entity\Robot
+            list:
+                title: "Robot"
+                actions: [{ name: 'new', label: 'Agregar Robot' }]
+                fields:
+                  - { property: 'id', label: 'ID' }
+                  - { property: 'name', label: 'Nombre' }
+            form:
+                title: "Crear Robot"
+                fields:
+                  - { property: 'name', label: 'Nombre' }
+        Team:
+            label: 'Equipos'
+            class: AppBundle\Entity\Team
+            list:
+                title: "Equipos"
+                actions: [{ name: 'new', label: 'Agregar Equipo' }]
+                fields:
+                  - { property: 'id', label: 'ID' }
+                  - { property: 'name', label: 'Nombre' }
+                  - { property: 'professor', label: 'Asesor' }
+                  - { property: 'robot', label: 'Robot' }
+                  - { property: 'alumns', label: 'Alumnos' }
+            form:
+                title: "Crear Equipo"
+                fields:
+                  - { property: 'id', label: 'ID' }
+                  - { property: 'name', label: 'Nombre' }
+                  - { property: 'professor', label: 'Asesor' }
+                  - { property: 'robot', label: 'Robot' }
+                  - { property: 'alumns', label: 'Alumnos' }

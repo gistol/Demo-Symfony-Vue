@@ -1,0 +1,23 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+    
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+career_rest:
+    type: rest
+    resource: AppBundle\Controller\CareerController
+    prefix: /api/
+
+professor_rest:
+    type: rest
+    resource: AppBundle\Controller\ProfessorController
+    prefix: /api/
+
+team_rest:
+    type: rest
+    resource: AppBundle\Controller\TeamController
+    prefix: /api/
