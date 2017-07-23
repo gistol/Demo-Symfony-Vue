@@ -5,53 +5,34 @@
       <p class="lead blog-description">Las secciones con <strong>*</strong> son requeridas para un registro válido.</p>
       <form @submit.prevent="createTeam">
         <team></team>
-        <alumn></alumn>
-        <div v-if="getTotalAlumns > 0">
-          <h3>Integrantes</h3>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>No. Control</th>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Email</th>
-                <th>Carrera</th>
-                <th>Semestre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="alumn in this.$store.state.alumns">
-                <td>{{ alumn.noControl }}</td>
-                <td>{{ alumn.name }}</td>
-                <td>{{ alumn.firstLastName }}</td>
-                <td>{{ alumn.secondLastName }}</td>
-                <td>{{ alumn.email }}</td>
-                <td>{{ alumn.selectedCareer }}</td>
-                <td>{{ alumn.semester }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <br>
+        <alumn-list :alumns="alumns"></alumn-list>
+        <create-alumn></create-alumn>
+        <br><br><br>
         <button type="submit" class="btn btn-primary pull-right">
           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Registrar Equipo
-        </button>        
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import Alumn from './components/Alumn'
+import AlumnList from './components/AlumnList'
+import CreateAlumn from './components/CreateAlumn'
 import Team from './components/Team'
 import axios from 'axios'
 const BASE_URL = 'http://localhost:8000'
 
 export default {
   name: 'app',
+  data () {
+    return {
+      alumns: this.$store.state.alumns
+    }
+  },
   components: {
-    Alumn,
+    AlumnList,
+    CreateAlumn,
     Team
   },
   methods: {
@@ -109,11 +90,6 @@ export default {
       this.$store.state.professor.secondLastName = null
       this.$store.state.professor.email = null
       this.$store.state.alumns = []
-    }
-  },
-  computed: {
-    getTotalAlumns () {
-      return this.$store.state.alumns.length
     }
   }
 }
