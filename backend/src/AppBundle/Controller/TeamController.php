@@ -7,13 +7,29 @@ use AppBundle\Entity\Professor;
 use AppBundle\Entity\Robot;
 use AppBundle\Entity\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TeamController extends Controller
 {
+    /**
+     * @Get("/teams")
+     */
+    public function getTeamsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $teams = $em->getRepository('AppBundle:Team')->findTeams();
+
+        $view = View::create()->setData(array('teams' => $teams));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
     /**
      * @Post("/create/new/team")
      */

@@ -5,6 +5,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     alumns: [],
+    team: {
+      name: null
+    },
+    robot: {
+      name: null
+    },
     selectedProfessor: 0,
     professor: {
       name: null,
@@ -16,6 +22,12 @@ export const store = new Vuex.Store({
   mutations: {
     addAlumn (state, alumn) {
       state.alumns.push(alumn)
+    },
+    updateTeamName (state, name) {
+      state.team.name = name
+    },
+    updateRobotName (state, name) {
+      state.robot.name = name
     },
     updateSelectedProfessor (state, selectedProfessor) {
       state.selectedProfessor = selectedProfessor

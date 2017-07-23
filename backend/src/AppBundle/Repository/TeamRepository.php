@@ -14,11 +14,11 @@ class TeamRepository extends \Doctrine\ORM\EntityRepository
     {
         $em = $this->getEntityManager();
         $dql = $em->createQueryBuilder();
-        $dql->select('t.name team', "concat(p.name, ' ', p.firstLastName) professor", 'r.name robot', "concat(a.name, ' ', a.firstLastName, ' - ', a.email) alumn")
+        $dql->select('t.id', 't.name team', "concat(p.name, ' ', p.firstLastName) professor", 'r.name robot', "concat(a.name, ' ', a.firstLastName, ' - ', a.email) alumn")
             ->from('AppBundle:Team', 't')
             ->innerJoin('t.professor', 'p')
             ->innerJoin('t.robot', 'r')
-            ->innerJoin('t.alumn', 'a')
+            ->innerJoin('t.alumns', 'a')
             ->where('a.isCaptain = true');
         return $dql->getQuery()->getResult();
     }
