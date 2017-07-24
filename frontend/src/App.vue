@@ -85,8 +85,8 @@ export default {
       this.clearForm()
     },
     clearForm () {
-      this.team = ''
-      this.robot = ''
+      this.$store.state.team.name = ''
+      this.$store.state.robot.name = ''
       this.$store.state.selectedProfessor = 0
       this.$store.state.professor.name = null
       this.$store.state.professor.firstLastName = null
